@@ -8,7 +8,9 @@ A GUI tool for converting embedded Origin graphs in PowerPoint to TIFF images wh
 
 A Windows desktop utility for researchers who need to replace embedded Origin graphs in PowerPoint with high-resolution TIFF images. It extracts the embedded native graph, asks the locally installed Origin application to export it through `expGraph`, and replaces only successfully verified objects in a new `.pptx` file.
 
-**Private preparation branch:** the owner has approved uploading this branch for CI review. Merge and public release have not been approved. No public download is available yet. The proposed project license is awaiting approval; see [license decision](docs/LICENSE-DECISION.md).
+**Version 1.1.0 · MIT License · Windows · Chinese GUI**
+
+Download the source package from [Releases](https://github.com/Hopkins0920/ppt-origin-to-tiff/releases). This version is distributed as source code. A Windows executable is not included; independent-machine validation and bundled runtime license checks are still in progress. See [validation](docs/VALIDATION.md).
 
 The Windows executable is still named `OriginTifTool.exe`; existing command-line entry points remain unchanged.
 
@@ -36,7 +38,7 @@ Other Office/Origin versions, mixed application bitness and other Windows versio
 
 ## Quick start for non-programmers
 
-After an owner-approved Windows release becomes available, download the Windows ZIP from the repository's Releases page. Extract the **entire folder**, open `OriginTifTool.exe`, and keep its `_internal` and `LICENSES` directories alongside it.
+For version 1.1.0, follow [Run from source](#run-from-source) to launch the graphical interface. No programming is needed to operate the window once its dependencies are installed.
 
 1. Click **选择文件…** (choose file), then review the recognized graphs.
 2. Choose a new output filename and DPI. The default is 600 DPI.
@@ -81,7 +83,7 @@ Each run creates a `.origin_tif_*` directory beside the input, or beneath `--wor
 - **Old `.ppt`, linked objects or signed/encrypted files?** Unsupported. Some damaged objects, special cropping/effects and mixed opaque/transparent white areas also require manual processing. Failures during document inspection can stop a whole run even with skipping enabled.
 - **Can I interrupt it immediately?** Cancellation is cooperative; it waits for the current native call or file check. An application timeout can leave its temporary application instance open. The tool does not force-kill user applications.
 - **Is every output visually identical?** No. Original frame geometry is preserved, but the cached preview and a fresh Origin rendering may differ. White transparency is restored through a PowerPoint color-key effect, which can affect white plot contents. Inspect flagged graphs.
-- **Is the EXE signed?** The candidate build is unsigned. Code signing and validation on a second Windows computer are release checklist items. Do not disable security protections to run it.
+- **Where is the Windows EXE?** Version 1.1.0 provides source code only. The local executable build is unsigned and has not completed independent-machine validation or bundled runtime license checks. It is not a release download.
 
 ## Development and maintenance
 
@@ -93,7 +95,11 @@ python scripts/audit_source.py
 
 Automated tests use synthetic package structures and mock Origin calls; GitHub-hosted CI does not validate real licensed Origin/PowerPoint exports. Native release testing is performed separately on a licensed Windows desktop with private fixtures that are never committed.
 
-See [contributing](CONTRIBUTING.md), [maintenance](docs/MAINTENANCE.md), [release checklist](docs/RELEASING.md), [third-party notices](THIRD_PARTY_NOTICES.md), and [changelog](CHANGELOG.md). Windows builds are manual workflow artifacts, not automatically published releases.
+See [contributing](CONTRIBUTING.md), [maintenance](docs/MAINTENANCE.md), [release checklist](docs/RELEASING.md), [third-party notices](THIRD_PARTY_NOTICES.md), and [changelog](CHANGELOG.md). Windows builds are manual workflow artifacts. Source releases are created after the release configuration is reviewed and merged, and their Windows tests and dependency checks pass.
+
+## License
+
+Project source and documentation are licensed under the [MIT License](LICENSE), copyright © 2026 Hopkins0920. Origin, Microsoft PowerPoint and third-party dependencies retain their own licenses. This project does not distribute Origin or Office, or grant rights to research data processed with it.
 
 ## Upstream interfaces
 

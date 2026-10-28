@@ -1,0 +1,91 @@
+name: Source release
+
+on:
+  push:
+    branches: [main]
+    paths: ['.github/release-source.toml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: source-release
+  cancel-in-progress: false
+
+jobs:
+  windows-checks:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '${{ matrix.python }}'
+          architecture: x64
+      - run: python -m pip install -r requirements.txt
+      - run: python -m unittest discover -s tests -v
+      - run: python origin_tif_gui.py --smoke-test
+      - run: python scripts/audit_source.py
+
+  dependency-check:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pip-audit
+      - run: python -m pip_audit -r requirements-build.txt
+
+  publish:
+    if: github.ref == 'refs/heads/main'
+    needs: [windows-checks, dependency-check]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Read release configuration
+        id: config
+        shell: python
+        run: |
+          import os, pathlib, re, tomllib
+          cfg = tomllib.loads(pathlib.Path('.github/release-source.toml').read_text())
+          tag = cfg['tag']
+          assert re.fullmatch(r'v\d+\.\d+\.\d+', tag), 'Invalid release tag'
+          version = tag[1:]
+          notes = f'docs/RELEASE_NOTES_{version}.md'
+          assert cfg['notes'] == notes and pathlib.Path(notes).is_file(), 'Missing release notes'
+          engine = pathlib.Path('origin_pptx_to_tif.py').read_text(encoding='utf-8')
+          assert re.search(r'VERSION\s*=\s*[\"\x27]' + re.escape(version) + r'[\"\x27]', engine), 'Version mismatch'
+          assert pathlib.Path('LICENSE').read_text().startswith('MIT License'), 'Missing project license'
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write(f'tag={tag}\nversion={version}\nnotes={notes}\n')
+      - name: Create source archive and checksums
+        env:
+          VERSION: '${{ steps.config.outputs.version }}'
+        run: |
+          mkdir release-assets
+          archive="ppt-origin-to-tiff-${VERSION}-source.zip"
+          git archive --format=zip --prefix="ppt-origin-to-tiff-${VERSION}/" --output="release-assets/${archive}" HEAD
+          cd release-assets
+          sha256sum "$archive" > SHA256SUMS
+      - name: Publish immutable source release
+        env:
+          GH_TOKEN: '${{ github.token }}'
+          GH_REPO: '${{ github.repository }}'
+          RELEASE_TAG: '${{ steps.config.outputs.tag }}'
+          RELEASE_NOTES: '${{ steps.config.outputs.notes }}'
+        run: |
+          if gh api "repos/${GH_REPO}/git/ref/tags/${RELEASE_TAG}" >/dev/null 2>&1; then
+            echo 'This tag already exists; no existing release or asset will be changed.'
+            exit 1
+          fi
+          gh release create "$RELEASE_TAG" release-assets/* --target "$GITHUB_SHA" --title "ppt-origin-to-tiff ${RELEASE_TAG}" --notes-file "$RELEASE_NOTES" --latest

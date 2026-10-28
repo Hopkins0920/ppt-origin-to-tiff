@@ -1,7 +1,9 @@
 # Security and privacy
 
-Do not post credentials, license keys, private paths or research data in public issues. After repository creation, use GitHub's private vulnerability reporting if the owner has enabled it. Until then, a public issue may ask for a private contact channel without revealing the vulnerability or sensitive material.
+Do not post credentials, license keys, personal paths or research data in public issues. Use GitHub private vulnerability reporting when it is enabled. Otherwise, a public issue may request a private contact channel without disclosing the vulnerability or sensitive details.
 
-Review dependencies and the Python runtime before each release. Release candidates are unsigned unless release notes explicitly state otherwise. Never advise users to disable Windows security controls. Only open presentations from sources the user trusts; native Office/Origin processing is outside the Python sandbox.
+Dependencies and the Python runtime are reviewed before releases. The source release workflow checks pinned build requirements against published advisories. This does not guarantee that Python, native libraries, Origin or Office are free of vulnerabilities.
 
-No response-time or long-term support guarantee is currently offered. The initial maintenance target is the latest approved stable release, with fixes backported only by an explicit owner decision.
+Only open presentations from trusted sources. Office/Origin process native data outside the Python sandbox. Windows builds are unsigned unless release notes explicitly state otherwise.
+
+No response-time or long-term support guarantee is offered. Security fixes target the latest stable release; backports are assessed individually.

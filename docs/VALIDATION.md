@@ -1,21 +1,29 @@
-# Publication validation — 2026-10-28
+# Validation — 1.1.0
 
-## Passed locally
+## Automated checks
 
-- Existing private v1.1.0 baseline: 9 synthetic regression tests passed before copying.
-- Isolated candidate: 9 synthetic regression tests and Tk GUI smoke checks passed on Windows, 64-bit Python 3.12.3.
-- Fresh Windows folder EXE builds and its embedded GUI smoke check passes. Exact bundled dependencies and notices are recorded in LICENSES/BUILD_INVENTORY.json.
-- Source preparation leaves conversion functions and GUI logic unchanged. The engine's Python requirement docstring, test f-string compatibility and dependency requirements are the existing-file changes.
-- After Origin was opened normally, five licensed-desktop regression cases passed with OriginPro 2021 and the updated dependencies: source success; packaged EXE skipping a failed first graph and converting a later graph; packaged strict failure without output; packaged all-skipped run without output; packaged cooperative cancellation without output. Successful presentations also passed native PowerPoint before/after rendering and original-input checksum checks. Skipped objects, groups, geometry and unrelated contents passed package verification.
-- Dependency advisory audit of the updated pinned build requirements reports no known vulnerabilities at the time checked. This is an advisory-database check, not proof of absence of vulnerabilities in Python/native DLLs or applications.
-- Personal documents, private native fixtures, image files, work reports, old binaries and virtual environments are excluded by the source allowlist. Public tests are synthetic. Original files and installed working tools are untouched.
-- Authorized private GitHub upload completed: the remote preparation tree matches all 29 reviewed source files exactly. Windows Python 3.11 and 3.12 each passed unit tests, GUI smoke checks and source auditing in [Windows source checks](https://github.com/Hopkins0920/ppt-origin-to-tiff/actions/runs/40688158344). The pinned dependency advisory check passed in [Dependency advisory check](https://github.com/Hopkins0920/ppt-origin-to-tiff/actions/runs/40688158333). These runs validate the initial uploaded candidate; subsequent commits are checked independently by CI.
+Windows CI runs the nine synthetic regression tests, a Tkinter GUI smoke check and a source privacy audit on Python 3.11 and 3.12. A separate workflow checks the pinned build requirements against published dependency advisories. Each source release also requires these checks before packaging.
 
-## Release blockers / unverified
+GitHub-hosted runners do not have licensed Origin or PowerPoint. Synthetic tests validate package handling and simulated failure behavior, not native graph export.
 
-- The initial unattended native call timed out after 180 seconds. After the user opened Origin, isolated hidden and visible instances both exported 600-DPI TIFFs successfully, and the five regression cases above passed. No conversion-code workaround was required. The initial timeout's precise cause was not established; cold-start behavior on other machines remains to be tested. Do not infer a licensing fault or universal compatibility from this recovery.
-- Hosted CI covers Python 3.11/3.12 on Windows, but has no licensed Origin/PowerPoint. Native compatibility evidence remains the separate local regression above. Updated Pillow requires Python 3.11+.
-- Second-machine EXE startup/native export, native DLL redistribution review and code signing are not complete. Candidate archives are for local review, not public release.
-- The owner created the private `Hopkins0920/ppt-origin-to-tiff` repository, and authorized preparation-branch upload and CI execution. The preparation branch is uploaded and [draft PR #1](https://github.com/Hopkins0920/ppt-origin-to-tiff/pull/1) is open. Project license, attribution, merge and public release remain unapproved. Main contains only the initial review notice; branch protection and release settings are not configured by this upload.
+## Licensed desktop regression
 
-Earlier local v1.1.0 testing recorded 20 conversions plus one explicitly retained failed graph in a 21-object presentation, including PowerPoint previews. This historical result does not validate the updated dependency environment.
+Local environment: Windows 11 x64, CPython 3.12.3, OriginPro 2021 and desktop PowerPoint. The tested dependency snapshot includes NumPy 1.26.4, Pillow 13.0.0, lxml 6.1.0 and pywin32 310.
+
+Five native cases passed:
+
+- Successful source conversion to 600-DPI TIFF, with PowerPoint before/after rendering.
+- Packaged execution that retained a failed first graph and converted a later graph.
+- Strict failure without publishing an output presentation.
+- An all-skipped run without publishing an output presentation.
+- Cancellation without publishing an output presentation.
+
+Successful runs passed input checksum, slide geometry, grouping, unrelated contents and skipped-object preservation checks. The native fixtures and resulting research images are kept outside this repository.
+
+## Compatibility limits
+
+An initial native call timed out after 180 seconds. After Origin was opened normally, isolated hidden and visible instances exported successfully. The cause of the initial timeout was not established. First-start, recovery and licensing dialogs may require attention before using the converter.
+
+Other Origin/Office versions and application bitness combinations have not been validated. Source code, the nine synthetic tests and the GUI are included in this release; a Windows executable is not distributed. Independent-machine executable startup, native export and bundled native-library redistribution checks are incomplete. The local executable is unsigned.
+
+Earlier local testing converted 20 graphs and retained one failed graph in a 21-object presentation. That historical result used a different dependency environment and is separate from the five cases above.

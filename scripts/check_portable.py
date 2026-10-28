@@ -96,7 +96,7 @@ def main():
     result['powerpoint_registered'] = registered('PowerPoint.Application')
     (work / 'summary.json').write_text(json.dumps(result, indent=2), encoding='utf-8')
     print(json.dumps(result, indent=2))
-    print('Private check directory:', work)
+    print('Private check directory:', str(work).encode('ascii', 'backslashreplace').decode('ascii'))
 
 
 if __name__ == '__main__':

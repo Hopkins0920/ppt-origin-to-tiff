@@ -30,6 +30,7 @@ The Windows executable is still named `OriginTifTool.exe`; existing command-line
 | OS | 64-bit Windows with an interactive desktop; Windows 11 is the locally tested environment |
 | Origin | Installed, licensed and usable through `Origin.Application` COM; Origin 2021 was tested locally |
 | PowerPoint | Installed desktop Microsoft PowerPoint COM application for the default slide preview check; optional when previews are disabled |
+| Windows previews | Windows PowerShell 5.1 and GDI+ for EMF/WMF cached previews; normally included with Windows desktop |
 | Source users | CPython 3.11–3.12, 64-bit, with Tkinter; the local build uses 3.12 (Pillow 13 requires Python 3.11+) |
 | EXE users | No separate Python installation; Origin and optional PowerPoint are still required |
 | Input | Standard `.pptx` with embedded Origin graphs and cached previews |
@@ -37,6 +38,8 @@ The Windows executable is still named `OriginTifTool.exe`; existing command-line
 Other Office/Origin versions, mixed application bitness and other Windows versions need validation. A browser edition of Office, WPS, Origin Viewer, macOS or Linux is not a supported substitute for this local automation workflow. Font availability can affect output.
 
 ## Quick start for non-programmers
+
+A Windows portable preview is being validated separately from the stable source release. See the [portable preview guide](docs/WINDOWS_PORTABLE.en.md) for prerequisites and startup testing. It is not yet a release download.
 
 For version 1.1.0, follow [Run from source](#run-from-source) to launch the graphical interface. No programming is needed to operate the window once its dependencies are installed.
 

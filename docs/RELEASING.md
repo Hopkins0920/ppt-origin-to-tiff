@@ -15,14 +15,16 @@ Source archives contain tracked files from the release commit. Real presentation
 
 Source publication does not publish a Windows executable. An executable release additionally requires:
 
-- A clean build using `requirements-build.txt` and `scripts/build_windows.py`.
+- A clean portable build using `requirements-portable-conda.txt`, `requirements-build.txt` and `scripts/build_portable.py`.
 - Review of generated LICENSES, Python/Tcl/Tk notices and the full native DLL inventory.
 - Confirmation that the bundle contains no Origin/Office binaries, activation material, user data or unlicensed third-party content.
 - Smoke tests and native conversion on an independent Windows computer.
 - Release notes stating the tested environment and signing status.
 - Owner approval of the exact assets, followed by archive/checksum verification.
 
-The manual Windows build workflow produces temporary Actions artifacts. In a public repository those artifacts may be publicly downloadable, so it must only be dispatched after bundle distribution checks are complete.
+The Windows portable checks workflow builds and checks the preview on an independent Windows runner. It does not upload binaries or create releases. Native export and manual desktop startup results are tracked separately in [portable validation](PORTABLE_VALIDATION.md). The older `scripts/build_windows.py` remains a local candidate builder; it is not used for portable distribution.
+
+To reproduce the portable preview, create a Windows conda prefix from `requirements-portable-conda.txt`, install `requirements-build.txt` using that prefix's `python -I -m pip --isolated`, then run `python -I scripts/build_portable.py`. Retain conda package caches until the notice/recipe collection completes. Run `scripts/check_portable.py` against the resulting ZIP. Each build uses a new directory and keeps previous builds intact.
 
 ## Maintenance and rollback
 

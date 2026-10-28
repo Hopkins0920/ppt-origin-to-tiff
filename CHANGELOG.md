@@ -1,5 +1,13 @@
 # Changelog
 
+## Unreleased — Windows portable preview
+
+- Traceable native runtime packaging, complete component notices and SHA-256 inventory.
+- Updated isolated Python/XML native runtime without changes to conversion or GUI logic.
+- Bundled corresponding source and recipe for the LGPL-covered shared library.
+- Windows build/startup/scan workflow that does not publish binary artifacts.
+- Portable English/Chinese instructions and a separate Microsoft Visual C++ runtime prerequisite.
+
 ## 1.1.0 — 2026-10-28
 
 - Native Origin TIFF export with a graphical inventory and progress display.

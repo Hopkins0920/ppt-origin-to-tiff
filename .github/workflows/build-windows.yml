@@ -1,22 +1,36 @@
-name: Manual Windows candidate build
+name: Windows portable checks
 on:
+  pull_request:
+    paths:
+      - 'scripts/build_portable.py'
+      - 'scripts/check_portable.py'
+      - 'requirements-portable-conda.txt'
+      - 'requirements-build.txt'
+      - 'third_party_sources.toml'
+      - 'docs/WINDOWS_PORTABLE*'
+      - '.github/workflows/build-windows.yml'
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
   build:
     runs-on: windows-latest
+    timeout-minutes: 30
+    env:
+      PYTHONNOUSERSITE: '1'
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          python-version: '3.12'
-          architecture: x64
-      - run: python -m pip install -r requirements-build.txt
-      - run: python -m unittest discover -s tests -v
-      - run: python scripts/build_windows.py
-      - uses: actions/upload-artifact@v4
-        with:
-          name: OriginTifTool-Windows-candidate
-          path: artifacts/*.zip
-          retention-days: 14
+      - name: Create pinned native runtime
+        run: '& "$env:CONDA\python.exe" -I -m conda create --prefix "$env:RUNNER_TEMP\portable-runtime" --file requirements-portable-conda.txt --yes'
+      - name: Install build dependencies
+        run: '& "$env:RUNNER_TEMP\portable-runtime\python.exe" -I -m pip --isolated install --only-binary=:all: -r requirements-build.txt'
+      - name: Verify dependency consistency
+        run: '& "$env:RUNNER_TEMP\portable-runtime\python.exe" -I -m pip --isolated check'
+      - name: Unit tests
+        run: '& "$env:RUNNER_TEMP\portable-runtime\python.exe" -E -s -m unittest discover -s tests -v'
+      - name: Build traceable portable preview
+        run: '& "$env:RUNNER_TEMP\portable-runtime\python.exe" -I scripts/build_portable.py --output-root "$env:RUNNER_TEMP\portable-build"'
+      - name: Test extracted preview without Python paths
+        run: '& "$env:RUNNER_TEMP\portable-runtime\python.exe" -I scripts/check_portable.py "$env:RUNNER_TEMP\portable-build\ppt-origin-to-tiff-1.1.0-Windows-x64-preview1.zip" --work-parent "$env:RUNNER_TEMP"'
+      - name: Audit source files
+        run: '& "$env:RUNNER_TEMP\portable-runtime\python.exe" -I scripts/audit_source.py'

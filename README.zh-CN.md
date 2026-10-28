@@ -26,12 +26,15 @@
 | Windows | 64 位、可交互桌面；本地验证环境为 Windows 11 |
 | Origin | 自行安装、合法授权，可通过 COM 调用；本地已验证 Origin 2021 |
 | PowerPoint | 默认的页面前后预览需要桌面版 PowerPoint；可取消勾选以跳过此步骤 |
+| 缓存预览 | Windows PowerShell 5.1 和 GDI+，用于 EMF／WMF 预览；标准 Windows 桌面通常已包含 |
 | Python | EXE 用户无需另装；源码用户使用带 Tkinter 的 64 位 CPython 3.11–3.12，本地打包使用 3.12；Pillow 13 要求 3.11+ |
 | 文件 | 标准 `.pptx`，含原生数据和缓存预览的 Origin 嵌入对象 |
 
 浏览器版 Office、WPS 和 Origin Viewer 不能替代这里调用的应用。其他 Origin/Office 版本、应用位数搭配和其他 Windows 版本需要实测。字体也会影响图形外观。工具不捆绑、不提供 Origin 或 Office 授权。
 
 ## 窗口使用教程
+
+Windows 便携测试版正在单独验证，尚未列入正式下载。运行前提及异机启动测试步骤见[便携版说明](docs/WINDOWS_PORTABLE.md)。
 
 1.1.0 版请先按下方“从源码运行”安装依赖并打开窗口。打开后，选择文件、转换和查看报告均通过图形界面完成，无需编写代码。
 

@@ -192,7 +192,7 @@ coll = COLLECT(exe, a.binaries, a.datas, strip=False, upx=False, name='OriginTif
         'excluded_microsoft_runtime': list(MS_RUNTIME),
         'signing': 'unsigned',
         'source_sha256': {name: digest(ROOT / name) for name in ('origin_pptx_to_tif.py', 'origin_tif_gui.py')},
-        'validation_scope': 'Local preview; independent computer startup test and owner publication review required.',
+        'validation_scope': 'Automated Windows build/startup/scan checks; native regression: Windows 11, OriginPro 2021 and desktop PowerPoint.',
     }
     (licenses / 'BUILD_INVENTORY.json').write_text(json.dumps(inventory, indent=2), encoding='utf-8')
     for name in ('LICENSE', 'THIRD_PARTY_NOTICES.md', 'CHANGELOG.md'):

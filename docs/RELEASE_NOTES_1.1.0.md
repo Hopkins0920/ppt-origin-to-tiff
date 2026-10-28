@@ -16,7 +16,7 @@ This is a **source release** under the MIT License. Download `ppt-origin-to-tiff
 
 Requirements: Windows desktop, 64-bit CPython 3.11–3.12 with Tkinter, the listed Python packages and a licensed local Origin installation. Desktop PowerPoint is required for the optional slide preview step. Origin and Office are not included.
 
-A Windows executable is not attached. Independent-machine validation and bundled runtime license review are incomplete.
+Windows users can download the separate [portable package](https://github.com/Hopkins0920/ppt-origin-to-tiff/releases/tag/v1.1.0-windows-preview1).
 
 ## Validation and limitations
 
@@ -28,4 +28,4 @@ Font differences, stale cached previews, cropping, special effects and white col
 
 本版采用 MIT 许可，以源码形式发布。默认通过 Origin 原生导出 600 DPI TIF，保留图框位置和尺寸；失败图表可保留原对象并继续。请下载源码 ZIP，按照 `README.zh-CN.md` 安装依赖并打开窗口。
 
-需要 Windows、本机授权 Origin 和 Python 3.11–3.12；页面预览另需桌面版 PowerPoint。当前不提供 EXE 下载。自动测试与本机原生回归已通过，其他 Origin/Office 版本尚未验证。投稿前请复核对照图；报告和中间文件可能含未发表数据，不应直接上传至公开 Issue。
+源码运行需要 Windows、本机授权 Origin 和 Python 3.11–3.12；页面预览另需桌面版 PowerPoint。另提供独立的 Windows 便携版下载。自动测试与本机原生回归已通过，其他 Origin/Office 版本尚未验证。投稿前请复核对照图；报告和中间文件可能含未发表数据，不应直接上传至公开 Issue。

@@ -10,9 +10,9 @@ A Windows desktop utility for researchers who need to replace embedded Origin gr
 
 **Version 1.1.0 · MIT License · Windows · Chinese GUI**
 
-Download the source package from [Releases](https://github.com/Hopkins0920/ppt-origin-to-tiff/releases). This version is distributed as source code. A Windows executable is not included; independent-machine validation and bundled runtime license checks are still in progress. See [validation](docs/VALIDATION.md).
+Download the [Windows portable ZIP](https://github.com/Hopkins0920/ppt-origin-to-tiff/releases/tag/v1.1.0-windows-preview1) or the [source release](https://github.com/Hopkins0920/ppt-origin-to-tiff/releases/tag/v1.1.0). The portable package includes the Python runtime, component notices and SHA-256 checksums. See [portable validation](docs/PORTABLE_VALIDATION.md).
 
-The Windows executable is still named `OriginTifTool.exe`; existing command-line entry points remain unchanged.
+The Windows executable is named `OriginTifTool.exe`.
 
 ## Features
 
@@ -32,16 +32,14 @@ The Windows executable is still named `OriginTifTool.exe`; existing command-line
 | PowerPoint | Installed desktop Microsoft PowerPoint COM application for the default slide preview check; optional when previews are disabled |
 | Windows previews | Windows PowerShell 5.1 and GDI+ for EMF/WMF cached previews; normally included with Windows desktop |
 | Source users | CPython 3.11–3.12, 64-bit, with Tkinter; the local build uses 3.12 (Pillow 13 requires Python 3.11+) |
-| EXE users | No separate Python installation; Origin and optional PowerPoint are still required |
+| EXE users | No separate Python installation; Microsoft Visual C++ v14 x64 runtime, Origin and optional PowerPoint are required |
 | Input | Standard `.pptx` with embedded Origin graphs and cached previews |
 
 Other Office/Origin versions, mixed application bitness and other Windows versions need validation. A browser edition of Office, WPS, Origin Viewer, macOS or Linux is not a supported substitute for this local automation workflow. Font availability can affect output.
 
 ## Quick start for non-programmers
 
-A Windows portable preview is being validated separately from the stable source release. See the [portable preview guide](docs/WINDOWS_PORTABLE.en.md) for prerequisites and startup testing. It is not yet a release download.
-
-For version 1.1.0, follow [Run from source](#run-from-source) to launch the graphical interface. No programming is needed to operate the window once its dependencies are installed.
+Download and extract the **entire** [Windows portable ZIP](https://github.com/Hopkins0920/ppt-origin-to-tiff/releases/tag/v1.1.0-windows-preview1), then double-click `OriginTifTool.exe`. Keep `_internal`, `LICENSES` and `SOURCES` with the executable. See the [portable guide](docs/WINDOWS_PORTABLE.en.md) for prerequisites. No separate Python installation is needed.
 
 1. Click **选择文件…** (choose file), then review the recognized graphs.
 2. Choose a new output filename and DPI. The default is 600 DPI.
@@ -86,7 +84,7 @@ Each run creates a `.origin_tif_*` directory beside the input, or beneath `--wor
 - **Old `.ppt`, linked objects or signed/encrypted files?** Unsupported. Some damaged objects, special cropping/effects and mixed opaque/transparent white areas also require manual processing. Failures during document inspection can stop a whole run even with skipping enabled.
 - **Can I interrupt it immediately?** Cancellation is cooperative; it waits for the current native call or file check. An application timeout can leave its temporary application instance open. The tool does not force-kill user applications.
 - **Is every output visually identical?** No. Original frame geometry is preserved, but the cached preview and a fresh Origin rendering may differ. White transparency is restored through a PowerPoint color-key effect, which can affect white plot contents. Inspect flagged graphs.
-- **Where is the Windows EXE?** Version 1.1.0 provides source code only. The local executable build is unsigned and has not completed independent-machine validation or bundled runtime license checks. It is not a release download.
+- **Where is the Windows EXE?** Download the Windows ZIP from the [portable release](https://github.com/Hopkins0920/ppt-origin-to-tiff/releases/tag/v1.1.0-windows-preview1) and extract the complete folder. The executable is unsigned. Missing VCRUNTIME DLL errors require the Microsoft Visual C++ v14 x64 runtime; see the portable guide.
 
 ## Development and maintenance
 
@@ -98,7 +96,7 @@ python scripts/audit_source.py
 
 Automated tests use synthetic package structures and mock Origin calls; GitHub-hosted CI does not validate real licensed Origin/PowerPoint exports. Native release testing is performed separately on a licensed Windows desktop with private fixtures that are never committed.
 
-See [contributing](CONTRIBUTING.md), [maintenance](docs/MAINTENANCE.md), [release checklist](docs/RELEASING.md), [third-party notices](THIRD_PARTY_NOTICES.md), and [changelog](CHANGELOG.md). Windows builds are manual workflow artifacts. Source releases are created after the release configuration is reviewed and merged, and their Windows tests and dependency checks pass.
+See [contributing](CONTRIBUTING.md), [maintenance](docs/MAINTENANCE.md), [release checklist](docs/RELEASING.md), [third-party notices](THIRD_PARTY_NOTICES.md), and [changelog](CHANGELOG.md). Reviewed source and Windows release configurations trigger their respective packaging workflows after checks pass.
 
 ## License
 

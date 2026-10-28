@@ -91,7 +91,7 @@ def main():
     result = {'archive_sha256': sha(args.archive), 'native_binaries': len(traced),
               'license_inventory': 'passed', 'corresponding_sources': 'passed',
               'gui_smoke_without_python_path': 'passed', 'synthetic_scan_without_origin': 'passed',
-              'unicode_and_space_path': 'passed', 'independent_machine_test': 'not performed by this script'}
+              'unicode_and_space_path': 'passed', 'validation_scope': 'GUI smoke and synthetic inventory'}
     result['origin_registered'] = registered('Origin.Application')
     result['powerpoint_registered'] = registered('PowerPoint.Application')
     (work / 'summary.json').write_text(json.dumps(result, indent=2), encoding='utf-8')

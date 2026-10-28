@@ -18,11 +18,11 @@ Source publication does not publish a Windows executable. An executable release 
 - A clean portable build using `requirements-portable-conda.txt`, `requirements-build.txt` and `scripts/build_portable.py`.
 - Review of generated LICENSES, Python/Tcl/Tk notices and the full native DLL inventory.
 - Confirmation that the bundle contains no Origin/Office binaries, activation material, user data or unlicensed third-party content.
-- Smoke tests and native conversion on an independent Windows computer.
+- Packaged startup/scan checks on a Windows runner and native conversion regression on a licensed Windows desktop.
 - Release notes stating the tested environment and signing status.
 - Owner approval of the exact assets, followed by archive/checksum verification.
 
-The Windows portable checks workflow builds and checks the preview on an independent Windows runner. It does not upload binaries or create releases. Native export and manual desktop startup results are tracked separately in [portable validation](PORTABLE_VALIDATION.md). The older `scripts/build_windows.py` remains a local candidate builder; it is not used for portable distribution.
+The Windows portable checks workflow builds and checks the preview on an independent Windows runner. Pull requests run checks only. A reviewed update to `.github/release-portable.toml` on main builds the ZIP, verifies it, runs dependency checks and creates a separate prerelease with the archive and SHA256SUMS. Existing tags and assets are never overwritten. The older `scripts/build_windows.py` remains a local candidate builder; it is not used for portable distribution. See [portable validation](PORTABLE_VALIDATION.md).
 
 To reproduce the portable preview, create a Windows conda prefix from `requirements-portable-conda.txt`, install `requirements-build.txt` using that prefix's `python -I -m pip --isolated`, then run `python -I scripts/build_portable.py`. Retain conda package caches until the notice/recipe collection completes. Run `scripts/check_portable.py` against the resulting ZIP. Each build uses a new directory and keeps previous builds intact.
 

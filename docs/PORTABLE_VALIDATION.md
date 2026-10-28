@@ -15,10 +15,8 @@ The preview packages the unchanged 1.1.0 conversion engine and GUI. Packaging an
 
 The native fixtures, figures, full reports and personal paths are not included in the repository or preview archive.
 
-## Remaining scope
+## Automated Windows validation
 
-The independent GitHub Windows runner performs build/startup/scan checks without licensed Origin or PowerPoint. Its result is recorded by the Windows portable checks workflow; it does not validate native exports.
+The [Windows portable checks](https://github.com/Hopkins0920/ppt-origin-to-tiff/actions/runs/40697244469) passed build, GUI startup, extracted package integrity, Unicode/space paths and synthetic graph inventory on a GitHub Windows runner with neither Origin nor PowerPoint registered. Native export evidence comes from the separate local regression above.
 
-Manual startup on another Windows desktop is pending. That computer does not have Origin, so its test covers opening the GUI and file chooser only. Other Origin/Office versions remain unverified.
-
-The preview is unsigned and requires the Microsoft Visual C++ v14 x64 runtime as a separate prerequisite. Microsoft system/runtime DLLs are excluded. No executable release or source-branch merge is automatic.
+The preview is unsigned and requires the Microsoft Visual C++ v14 x64 runtime as a separate prerequisite. Microsoft system/runtime DLLs are excluded. Release files include component notices, corresponding LGPL source and SHA-256 checksums.

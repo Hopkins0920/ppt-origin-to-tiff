@@ -24,6 +24,6 @@ Successful runs passed input checksum, slide geometry, grouping, unrelated conte
 
 An initial native call timed out after 180 seconds. After Origin was opened normally, isolated hidden and visible instances exported successfully. The cause of the initial timeout was not established. First-start, recovery and licensing dialogs may require attention before using the converter.
 
-Other Origin/Office versions and application bitness combinations have not been validated. Source code, the nine synthetic tests and the GUI are included in this release; a Windows executable is not distributed. Independent-machine executable startup, native export and bundled native-library redistribution checks are incomplete. The local executable is unsigned.
+Other Origin/Office versions and application bitness combinations have not been validated. The original 1.1.0 release contains source code, the synthetic tests and GUI. The separate Windows portable package and its runtime checks are documented in [portable validation](PORTABLE_VALIDATION.md).
 
 Earlier local testing converted 20 graphs and retained one failed graph in a 21-object presentation. That historical result used a different dependency environment and is separate from the five cases above.

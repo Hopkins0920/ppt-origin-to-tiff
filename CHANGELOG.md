@@ -1,11 +1,11 @@
 # Changelog
 
-## Unreleased — Windows portable preview
+## 1.1.0 Windows portable preview1 — 2026-10-28
 
 - Traceable native runtime packaging, complete component notices and SHA-256 inventory.
 - Updated isolated Python/XML native runtime without changes to conversion or GUI logic.
 - Bundled corresponding source and recipe for the LGPL-covered shared library.
-- Windows build/startup/scan workflow that does not publish binary artifacts.
+- Windows build/startup/scan checks and reviewed portable release packaging.
 - Portable English/Chinese instructions and a separate Microsoft Visual C++ runtime prerequisite.
 
 ## 1.1.0 — 2026-10-28
@@ -17,7 +17,7 @@
 - English and Chinese documentation, synthetic regression tests and Windows CI for Python 3.11 and 3.12.
 - MIT license and source release archives with SHA-256 checksums.
 - Source installations require Python 3.11+; the tested build snapshot uses Pillow 13.0.0 and lxml 6.1.0.
-- Source distribution only. Windows executable distribution awaits independent-machine validation and bundled runtime license review.
+- Initial source distribution; Windows portable packaging is recorded in the separate entry above.
 
 ## Local history
 

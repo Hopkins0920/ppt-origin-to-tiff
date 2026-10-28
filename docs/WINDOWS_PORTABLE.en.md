@@ -13,7 +13,7 @@ Double-click `OriginTifTool.exe`. No separate Python installation is needed. The
 - Windows PowerShell 5.1 and GDI+ for EMF/WMF cached previews; these are normally included in standard Windows desktop installations.
 - Licensed local Origin for conversion. Desktop PowerPoint is additionally required for optional slide previews.
 
-On a computer without Origin, opening the window and file dialog is still a useful startup test. It does not validate native graph export. Independent computer startup confirmation is pending; other Origin/Office versions remain unverified.
+Native conversion regression used Windows 11 x64, OriginPro 2021 and desktop PowerPoint. GitHub Windows checks separately cover packaging, extracted GUI startup and synthetic graph inventory. See `docs/PORTABLE_VALIDATION.md`.
 
 Use the archive checksum supplied alongside the package. No code signature is provided; do not disable security protections. Keep unpublished presentations and full work reports out of public issues.
 

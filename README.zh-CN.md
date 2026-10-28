@@ -4,7 +4,9 @@
 
 面向科研人员的 Windows 小工具。它读取 PowerPoint 中可双击打开的 Origin 嵌入图表，通过本机 Origin 的 `expGraph`（导出图形）生成 TIF，再将通过检查的图表替换到新 PPT 中。默认 600 DPI，原文件保留。
 
-**当前状态：所有者已批准上传私有准备分支并运行 CI；尚未批准合并和公开发布。项目许可待确认，见[许可决策](docs/LICENSE-DECISION.md)。**
+**1.1.0 版 · MIT 许可证 · Windows · 中文界面**
+
+从 [Releases](https://github.com/Hopkins0920/ppt-origin-to-tiff/releases) 下载源码包。本版以源码形式提供；Windows EXE 尚未完成另一台电脑的验证及所捆绑运行库的许可检查，暂不作为下载文件提供。详见[验证记录](docs/VALIDATION.md)。
 
 项目名称为 `ppt-origin-to-tiff`；为兼容现有使用方式，Windows 程序仍叫 `OriginTifTool.exe`，命令行入口文件名也不变。
 
@@ -29,9 +31,9 @@
 
 浏览器版 Office、WPS 和 Origin Viewer 不能替代这里调用的应用。其他 Origin/Office 版本、应用位数搭配和其他 Windows 版本需要实测。字体也会影响图形外观。工具不捆绑、不提供 Origin 或 Office 授权。
 
-## 无需编程的使用教程
+## 窗口使用教程
 
-所有者批准正式发布后，从仓库 Releases 下载 Windows ZIP，**完整解压**后双击 `OriginTifTool.exe`；保留旁边的 `_internal` 和 `LICENSES` 文件夹。当前尚无公开下载版本。
+1.1.0 版请先按下方“从源码运行”安装依赖并打开窗口。打开后，选择文件、转换和查看报告均通过图形界面完成，无需编写代码。
 
 1. 点“选择文件”，选择 `.pptx`，查看识别列表。
 2. 选择新的保存文件名，分辨率默认 600 DPI。
@@ -74,7 +76,7 @@ python origin_pptx_to_tif.py "C:\Figures\example.pptx" --dpi 600 --skip-failed
 - **旧 `.ppt`、外部链接、加密或数字签名文件：**不支持。损坏对象、特殊裁切/效果、透明背景混合不透明白色内容可能需要人工处理。读取结构时失败仍可能停止整次转换。
 - **为何大小一致但字体不同：**PPT 缓存预览与当前 Origin 图形设置、版本、字体可能不同。几何检查与相似度不能证明科研内容完全一致。
 - **白色透明效果：**为恢复原 OLE 的透明背景，PPT 使用白色透明色键，也可能使图中白色内容透明；检查橙色提示。
-- **EXE 的限制：**候选包未签名，仍需 Origin 和可选 PowerPoint；第二台电脑的验证和签名安排列入发布检查。不要关闭安全防护来运行程序。
+- **在哪里下载 EXE：**1.1.0 版仅提供源码。本地 EXE 构建尚未完成另一台电脑的验证及运行库许可检查，且未签名，因此未列入下载文件。
 - **卡住或超时：**原生调用结束前取消可能需要等待；超时可能遗留临时应用实例，工具不会强杀用户应用。
 
 ## 测试与长期维护
@@ -84,3 +86,7 @@ python origin_pptx_to_tif.py "C:\Figures\example.pptx" --dpi 600 --skip-failed
 请通过 Bug／功能建议模板描述问题；提问前删除个人路径和未发表内容。维护者按独立分支修改、自动测试、人工回归、所有者批准合并、更新版本记录的顺序工作。
 
 [贡献指南](CONTRIBUTING.md) · [维护流程](docs/MAINTENANCE.md) · [发布清单](docs/RELEASING.md) · [第三方说明](THIRD_PARTY_NOTICES.md) · [版本记录](CHANGELOG.md)
+
+## 开源许可
+
+项目代码和文档采用 [MIT 许可证](LICENSE)，版权署名为 © 2026 Hopkins0920。允许使用、修改和再分发，包括商业用途，需保留版权及许可声明。Origin、PowerPoint 和第三方依赖分别遵循其自身许可；本项目的许可不涉及用户处理的科研数据。

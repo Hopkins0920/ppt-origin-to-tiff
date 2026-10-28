@@ -1,15 +1,31 @@
-# OriginTifTool 1.1.0 — publication candidate
+# ppt-origin-to-tiff 1.1.0
 
-Private preparation/CI review is authorized; no public release or merge is approved. Project license and owner attribution are pending.
+Convert embedded Origin graphs in PowerPoint to native TIFF images, with a Chinese graphical interface and a default resolution of 600 DPI.
 
-Native Origin-to-TIFF conversion, Chinese GUI, per-object skipping, original-file protection, comparison reports and optional PowerPoint slide previews. Failed graphs remain editable Origin objects; partial conversion is explicitly reported.
+## Features
 
-Requirements: local Windows desktop, licensed Origin COM server, optional licensed desktop PowerPoint; source requires Python and listed dependencies. EXE does not include Origin/Office. No English GUI in this release.
+- Inventory embedded graphs and show conversion progress.
+- Preserve original placement, dimensions, rotation, grouping and stacking order.
+- Keep failed graphs as editable Origin objects and continue with the remaining graphs.
+- Write a new presentation, comparison images and a structured report.
+- Support cancellation, command-line operation and optional PowerPoint slide previews.
 
-Current local validation: nine synthetic tests and source/packaged GUI smoke tests pass. Five native regression cases pass: successful conversion with PowerPoint renders; skip then later success with preserved OLE; strict failure; all skipped without output; cancellation without output. This is separate from historical private regressions. See docs/VALIDATION.md for the initial cold-start timeout and recovery.
+## Download and installation
 
-Build environment: Windows 11 x64, Python 3.12.3, OriginPro 2021, locally installed desktop PowerPoint; NumPy 1.26.4, Pillow 13.0.0, lxml 6.1.0, pywin32 310, PyInstaller 6.13.0. Fixed Python build dependencies passed the advisory check on 2026-10-28. Python/native DLL review, independent-machine validation, signature arrangements, project license and owner publication approval remain pending. Other Origin/Office versions are unverified.
+This is a **source release** under the MIT License. Download `ppt-origin-to-tiff-1.1.0-source.zip`, extract it and follow the English or Chinese README. `SHA256SUMS` contains the archive checksum.
 
-Known limitations: cached previews versus fresh render differences; font availability; color-key transparency; special OLE effects/cropping; unsupported linked/signed/encrypted/legacy input; cooperative cancellation and possible leftover temporary native instances after timeouts.
+Requirements: Windows desktop, 64-bit CPython 3.11–3.12 with Tkinter, the listed Python packages and a licensed local Origin installation. Desktop PowerPoint is required for the optional slide preview step. Origin and Office are not included.
 
-中文：这是待审核候选，不是已公开的正式发布。正式发布记录须附实际测试环境、跳过数量说明、校验结果、依赖审查和签名状态；不要使用科研原图作为公开示例。
+A Windows executable is not attached. Independent-machine validation and bundled runtime license review are incomplete.
+
+## Validation and limitations
+
+Windows CI covers Python 3.11/3.12, nine synthetic tests, GUI startup, source auditing and dependency advisories. Local native regression used Windows 11 x64, Python 3.12.3, OriginPro 2021 and desktop PowerPoint; five success/failure/cancellation cases passed. Other Origin/Office versions remain unverified. See [validation](https://github.com/Hopkins0920/ppt-origin-to-tiff/blob/main/docs/VALIDATION.md).
+
+Font differences, stale cached previews, cropping, special effects and white color-key transparency can change the appearance. Inspect converted figures before submission. Linked objects, legacy `.ppt`, encrypted and digitally signed files are unsupported. Cancellation waits for a safe boundary; native application timeouts may leave temporary instances open.
+
+## 中文说明
+
+本版采用 MIT 许可，以源码形式发布。默认通过 Origin 原生导出 600 DPI TIF，保留图框位置和尺寸；失败图表可保留原对象并继续。请下载源码 ZIP，按照 `README.zh-CN.md` 安装依赖并打开窗口。
+
+需要 Windows、本机授权 Origin 和 Python 3.11–3.12；页面预览另需桌面版 PowerPoint。当前不提供 EXE 下载。自动测试与本机原生回归已通过，其他 Origin/Office 版本尚未验证。投稿前请复核对照图；报告和中间文件可能含未发表数据，不应直接上传至公开 Issue。

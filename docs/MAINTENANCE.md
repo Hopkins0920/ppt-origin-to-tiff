@@ -1,13 +1,15 @@
 # Maintenance workflow / 长期维护
 
-1. Triage incoming issues by data-loss risk, reproducibility and environment. Use `bug`, `enhancement`, `needs-info`, `compatibility` and `release-blocker` labels after the repository exists. No label automation is installed yet.
-2. Confirm the current stable version and obtain a synthetic reproduction. Do not request complete confidential work directories in public.
-3. Create a focused branch. Capture a failing regression for substantive bugs, make the smallest change, and run Windows CI. No runtime refactoring merely for style.
-4. Changes affecting Origin/PowerPoint automation, TIFF output, geometry, cancellation or dependencies need a licensed desktop regression. Record counts, rendering checks and preserved skipped objects locally. Share only sanitized outcomes.
-5. Submit a PR with validation. **The owner approves every merge.** Configure main branch protection and required CI after creation; these settings are not enforced by local files alone. No automatic merge.
-6. Follow semantic versioning: patch for fixes, minor for compatible features, major for breaking input/output or workflow changes. Update engine VERSION, GUI version text, changelog, README and release notes together.
-7. Before a release, follow RELEASING.md and obtain separate owner publication approval. Retain the previous release and artifacts; never silently replace or delete releases.
+1. Triage issues by reproducibility, data-loss risk and environment. Useful labels include `bug`, `enhancement`, `needs-info`, `compatibility` and `release-blocker`.
+2. Confirm the affected version and obtain a minimal synthetic reproduction. Public reports must omit confidential work directories and research figures.
+3. Create a focused branch. Add a regression test for substantive bugs, make the smallest appropriate fix and run Windows CI.
+4. Changes to Origin/PowerPoint automation, TIFF output, geometry, cancellation or dependencies require a licensed desktop regression. Record sanitized outcomes, including skipped objects and input preservation.
+5. Submit a pull request with validation. The owner approves merges. Main branch protection and required checks are repository settings; the project does not use automatic merging.
+6. Use semantic versioning: patch for fixes, minor for compatible features, major for breaking input/output or workflow changes. Keep engine/GUI version text, changelog and release notes consistent.
+7. Follow [Releasing](RELEASING.md). A reviewed change to the source release configuration triggers source packaging only after checks pass. Windows binaries have additional distribution checks.
 
-Review dependency update PRs weekly when practical; Dependabot is configured, but updates are never automatically merged. Check security advisories and run `pip-audit` in the proposed environment before release. The build environment snapshot is a tested baseline, not a security approval. A maintainer periodically checks new Origin/Office versions when licensed test machines are available; no unattended scheduling is activated.
+Dependabot proposes dependency and GitHub Actions updates. Review advisories and run `pip-audit` before release; updates are not automatically merged. Test new Origin/Office versions when licensed machines are available, and distinguish tested versions from unverified combinations.
 
-Support target: latest owner-approved stable release. Compatibility rows must say tested, untested or unsupported, not assume that all versions work. Maintain a sanitized matrix in release notes; do not publish internal paths or private fixture names.
+Support targets the latest stable release. There is no guaranteed response time or long-term support period. Previous releases remain available; backports require a maintainer decision.
+
+中文：问题通过 Issue 模板登记，修改使用独立分支，测试后提交 PR，由项目所有者确认合并。涉及原生导出和依赖的修改还需在授权 Windows 环境中回归。源码发布与 EXE 发布分开验证，旧版本保留，修复通过新版本提供。

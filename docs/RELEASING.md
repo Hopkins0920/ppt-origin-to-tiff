@@ -1,17 +1,29 @@
-# Release checklist (manual approval gates)
+# Releasing
 
-- [ ] Owner approves repository name, account, visibility, license and attribution. Add the approved LICENSE; remove pending-publication notices only after approval.
-- [ ] Inspect all tracked files and run `python scripts/audit_source.py`; audit the complete Git history before first upload. `.gitignore` is not a history scrubber.
-- [ ] Unit tests and GUI smoke checks pass; Windows 3.11/3.12 CI results reviewed after upload. Do not claim CI has run before GitHub executes it.
-- [ ] Run `python -m pip_audit -r requirements.txt` in an isolated environment; review pinned build dependencies and runtime advisories as well. Resolve or explicitly document any release blockers.
-- [ ] Native local test: strict success; skip failure then successful later graph; all skipped gives no output; cancellation publishes no result; original checksum unchanged; geometry/groups and non-target objects preserved; PowerPoint opens/renders the candidate. Use private/synthetic fixtures, not committed manuscripts.
-- [ ] Build with `python scripts/build_windows.py` in a clean Windows CPython environment with the approved dependency snapshot. Do not copy old `_internal` folders into a new release.
-- [ ] Inspect generated LICENSES and native DLL inventory; resolve transitive license notices. Confirm no Origin/Office binaries, fonts, license material or user data are bundled.
-- [ ] Verify EXE smoke check, independent machine startup and native export. Candidate is unsigned unless code signing is explicitly arranged; never weaken Windows security policy.
-- [ ] Create source ZIP from the approved Git commit (`git archive`), Windows folder ZIP, SHA256SUMS and release notes with exact environment and known limitations. Do not add unpublished research screenshots as examples.
-- [ ] Owner reviews diff and approves merging the preparation branch to main. Owner separately approves upload/publication. No automatic GitHub release publishing workflow is configured.
-- [ ] After upload, enable branch protection, required CI checks and private vulnerability reporting. Create an owner-approved GitHub release, attach reviewed assets, verify hashes and links.
+## Source releases
 
-The supplied Windows workflow creates temporary Actions artifacts only when manually dispatched. Artifact access and retention follow GitHub permissions; treat a public repository's build artifacts as public distribution too. Do not dispatch until license and binary review approval is in place.
+1. Create a release branch from `main`. Update the engine/GUI version when behavior changes, the changelog and a versioned release note.
+2. Update `.github/release-source.toml` with the intended tag and release note path. This file is the source publication trigger.
+3. Review the full diff and tracked files. Run the unit tests, GUI smoke check, source audit and dependency advisory checks. Changes affecting native export, geometry, cancellation or dependencies also require a licensed desktop regression.
+4. Open a pull request. The owner reviews the change and approves merging and publication. Merging a change to the release configuration starts the source release workflow.
+5. The workflow runs Windows checks on Python 3.11 and 3.12, audits build dependencies, then creates the source ZIP, SHA256SUMS, tag and GitHub release for that commit. It does not overwrite an existing tag or release. A workflow failure leaves publication incomplete; inspect Actions before retrying.
+6. Verify the release page, assets, checksums, version and installation instructions. Repository visibility is a separate owner-controlled setting.
 
-Rollback: keep the previous stable release and revert through a reviewed PR. Do not rewrite public history or delete existing files/releases without explicit owner permission.
+Source archives contain tracked files from the release commit. Real presentations, native fixtures, reports, virtual environments and executable builds are excluded. Audit Git history before making a repository public; ignore rules do not remove existing history.
+
+## Windows executable releases
+
+Source publication does not publish a Windows executable. An executable release additionally requires:
+
+- A clean build using `requirements-build.txt` and `scripts/build_windows.py`.
+- Review of generated LICENSES, Python/Tcl/Tk notices and the full native DLL inventory.
+- Confirmation that the bundle contains no Origin/Office binaries, activation material, user data or unlicensed third-party content.
+- Smoke tests and native conversion on an independent Windows computer.
+- Release notes stating the tested environment and signing status.
+- Owner approval of the exact assets, followed by archive/checksum verification.
+
+The manual Windows build workflow produces temporary Actions artifacts. In a public repository those artifacts may be publicly downloadable, so it must only be dispatched after bundle distribution checks are complete.
+
+## Maintenance and rollback
+
+Keep prior releases and artifacts. Fixes use reviewed branches and new versions. Revert faulty changes through a pull request; do not silently replace published assets, rewrite public history or delete earlier releases.

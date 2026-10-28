@@ -26,7 +26,7 @@ jobs:
     env:
       PYTHONNOUSERSITE: '1'
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - name: Create pinned native runtime
         run: '& "$env:CONDA\python.exe" -I -m conda create --prefix "$env:RUNNER_TEMP\portable-runtime" --file requirements-portable-conda.txt --yes'
       - name: Install build dependencies
@@ -54,7 +54,7 @@ jobs:
   dependency-audit:
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -68,7 +68,7 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
